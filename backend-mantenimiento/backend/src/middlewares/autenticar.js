@@ -1,5 +1,12 @@
 const jwt = require('jsonwebtoken');
 
+/**
+ * Middleware de autenticación JWT.
+ * Verifica que la solicitud incluya un token válido en el header Authorization.
+ * Si el token es válido, adjunta el payload del usuario a req.usuario y llama a next().
+ * Si no, responde con 401.
+ */
+
 const autenticar = (req, res, next) => {
   // Se espera el header con formato: Authorization: Bearer <token>
   const authHeader = req.headers.authorization;
