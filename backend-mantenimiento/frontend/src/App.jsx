@@ -7,6 +7,7 @@ import Activos from './pages/Activos'
 import Ordenes from './pages/Ordenes'
 import OrdenForm from './pages/OrdenForm'
 import OrdenDetail from './pages/OrdenDetail'
+import Usuarios from './pages/Usuarios'
 import { isAuthenticated } from './auth'
 
 const Private = ({ children }) => {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/ordenes" element={<Private><Ordenes /></Private>} />
           <Route path="/ordenes/nueva" element={<Private><OrdenForm /></Private>} />
           <Route path="/ordenes/:id" element={<Private><OrdenDetail /></Private>} />
+          <Route path="/usuarios" element={<Private><Usuarios /></Private>} />
         </Routes>
       </main>
     </div>

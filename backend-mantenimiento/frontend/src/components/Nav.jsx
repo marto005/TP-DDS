@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { isAuthenticated, logout } from '../auth'
+import { currentUser } from '../services/authService'
 
 export default function Nav(){
   const navigate = useNavigate()
+  const user = currentUser()
   const handleLogout = () => { logout(); navigate('/login') }
   return (
     <nav className="nav">
@@ -15,7 +17,7 @@ export default function Nav(){
           <>
             <Link to="/activos">Activos</Link>
             <Link to="/ordenes">Órdenes</Link>
-            <Link to="/usuarios">Usuarios</Link>
+            {(user?.rol === 'admin' || user?.rol === 'mantenimiento') && <Link to="/usuarios">Usuarios</Link>}
             <button onClick={handleLogout}>Salir</button>
           </>
         ) : (
