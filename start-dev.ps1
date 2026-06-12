@@ -12,8 +12,8 @@ if (Test-Path $portableNodeDir) {
   $npmCmd = Join-Path $portableNodeDir 'npm.cmd'
 }
 
-$backendDir = Join-Path $repoRoot 'backend-mantenimiento\backend'
-$frontendDir = Join-Path $repoRoot 'backend-mantenimiento\frontend'
+$backendDir = Join-Path $repoRoot 'backend'
+$frontendDir = Join-Path $repoRoot 'frontend'
 
 function Start-DevWindow {
   param(
