@@ -8,7 +8,7 @@
     . node -v
     . con este ultimo te tiene que decir que estas usando node 20.19.0
     . npm install
-2. volver a la carpeta raiz TP-DDS-completo
+2. volver a la carpeta raiz TP-DDS-final
 3. ejecutar .\start-dev.cmd
 4. si se quiere cargar la semilla hay que moverse a la carpeta de back y ejecutar npm run seed
 5. aca abajo se encuentran otras opciones de arranque pero esta es la ultima funcional y recomendada.
