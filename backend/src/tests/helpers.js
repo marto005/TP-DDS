@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test';
 process.env.JWT_SECRET = 'test_secret_jwt';
 
 const bcrypt = require('bcryptjs');
-const { sequelize, Usuario, Activo, Orden } = require('../../models');
+const { sequelize, Usuario, Activo, Orden } = require('../models');
 
 const setupDB = async () => {
   await sequelize.sync({ force: true });

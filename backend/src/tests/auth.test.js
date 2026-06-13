@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'test';
 process.env.JWT_SECRET = 'test_secret_jwt';
 
 const request = require('supertest');
-const app = require('../../app');
+const app = require('../app');
 const { setupDB, teardownDB, crearUsuarios } = require('./helpers');
 
 beforeAll(async () => {

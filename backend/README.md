@@ -164,6 +164,7 @@ cancelada  cancelada   cancelada
 | mantenimiento | Ver todo, asignar técnico, cambiar prioridad, cancelar cualquier orden|
 | admin         | Todo lo anterior + sin restricciones                                  |
 
+- La lectura de órdenes también queda restringida por propiedad: solicitante solo ve sus órdenes y técnico solo ve las asignadas.
 - Rutas sin JWT → `401`
 - Rutas con JWT pero sin permiso → `403`
 

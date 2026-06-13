@@ -30,12 +30,27 @@ const registrarHistorial = async (ordenId, usuarioId, accion, valorAnterior, val
 
 // ─── Servicio ────────────────────────────────────────────────────────────────
 
-const listarOrdenes = async ({ activoId, estado, prioridad, tecnicoId, page, limit, sortBy, order }) => {
+const puedeVerOrden = (usuario, orden) => {
+  if (!usuario || !orden) return false;
+  if (['admin', 'mantenimiento'].includes(usuario.rol)) return true;
+  if (usuario.rol === 'solicitante') return orden.solicitanteId === usuario.id;
+  if (usuario.rol === 'tecnico') return orden.tecnicoId === usuario.id;
+  return false;
+};
+
+const listarOrdenes = async (filtros, usuario) => {
+  const { activoId, estado, prioridad, tecnicoId, page, limit, sortBy, order } = filtros;
   const where = {};
   if (activoId) where.activoId = activoId;
   if (estado) where.estado = estado;
   if (prioridad) where.prioridad = prioridad;
   if (tecnicoId) where.tecnicoId = tecnicoId;
+
+  if (usuario?.rol === 'solicitante') {
+    where.solicitanteId = usuario.id;
+  } else if (usuario?.rol === 'tecnico') {
+    where.tecnicoId = usuario.id;
+  }
 
   const pageNum = parseInt(page) || 1;
   const limitNum = parseInt(limit) || 10;
@@ -77,9 +92,16 @@ const obtenerOrden = async (id) => {
   return orden;
 };
 
-const obtenerHistorial = async (ordenId) => {
-  const orden = await Orden.findByPk(ordenId);
-  if (!orden) throw AppError('Orden no encontrada.', 404);
+const obtenerOrdenVisible = async (id, usuario) => {
+  const orden = await obtenerOrden(id);
+  if (!puedeVerOrden(usuario, orden)) {
+    throw AppError('No tenés permiso para ver esta orden.', 403);
+  }
+  return orden;
+};
+
+const obtenerHistorial = async (ordenId, usuario) => {
+  const orden = await obtenerOrdenVisible(ordenId, usuario);
 
   return HistorialOrden.findAll({
     where: { ordenId },
@@ -337,6 +359,7 @@ const obtenerResumen = async () => {
 module.exports = {
   listarOrdenes,
   obtenerOrden,
+  obtenerOrdenVisible,
   obtenerHistorial,
   crearOrden,
   editarOrden,

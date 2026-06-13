@@ -2,7 +2,7 @@ const ordenService = require('../services/ordenService');
 
 const listar = async (req, res, next) => {
   try {
-    const resultado = await ordenService.listarOrdenes(req.query);
+    const resultado = await ordenService.listarOrdenes(req.query, req.usuario);
     res.json(resultado);
   } catch (err) {
     next(err);
@@ -20,7 +20,7 @@ const resumen = async (req, res, next) => {
 
 const detalle = async (req, res, next) => {
   try {
-    const orden = await ordenService.obtenerOrden(req.params.id);
+    const orden = await ordenService.obtenerOrdenVisible(req.params.id, req.usuario);
     res.json(orden);
   } catch (err) {
     next(err);
@@ -29,7 +29,7 @@ const detalle = async (req, res, next) => {
 
 const historial = async (req, res, next) => {
   try {
-    const datos = await ordenService.obtenerHistorial(req.params.id);
+    const datos = await ordenService.obtenerHistorial(req.params.id, req.usuario);
     res.json(datos);
   } catch (err) {
     next(err);

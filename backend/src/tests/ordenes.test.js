@@ -3,8 +3,8 @@ process.env.JWT_SECRET = 'test_secret_jwt';
 
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
-const app = require('../../app');
-const { Orden } = require('../../models');
+const app = require('../app');
+const { Orden } = require('../models');
 const { setupDB, teardownDB, crearUsuarios, crearActivos } = require('./helpers');
 
 let usuarios, activos;

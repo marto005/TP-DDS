@@ -187,10 +187,10 @@ Todos usan contraseña: **`password123`**
 ### Órdenes
 | Método | Ruta                          | Auth | Roles              | Descripción             |
 |--------|-------------------------------|------|--------------------|-------------------------|
-| GET    | `/api/ordenes`                | ✅   | todos              | Listar (filtros + paginación) |
+| GET    | `/api/ordenes`                | ✅   | todos              | Listar (filtros + paginación); solicitante ve solo las propias y técnico solo las asignadas |
 | GET    | `/api/ordenes/resumen`        | ✅   | admin, mant        | KPIs agregados          |
-| GET    | `/api/ordenes/:id`            | ✅   | todos              | Detalle                 |
-| GET    | `/api/ordenes/:id/historial`  | ✅   | todos              | Historial de cambios    |
+| GET    | `/api/ordenes/:id`            | ✅   | todos              | Detalle; aplica control de propiedad/rol |
+| GET    | `/api/ordenes/:id/historial`  | ✅   | todos              | Historial; aplica control de propiedad/rol |
 | POST   | `/api/ordenes`                | ✅   | sol, admin, mant   | Crear orden             |
 | PUT    | `/api/ordenes/:id`            | ✅   | según permisos     | Editar campos           |
 | PATCH  | `/api/ordenes/:id/cancelar`   | ✅   | según permisos     | Cancelar orden          |
@@ -280,6 +280,8 @@ El JWT se genera en `/api/auth/login`. Payload:
 | Resolver orden             | ❌              | ✅ asignadas    | ✅         |
 | Ver resumen/KPIs           | ❌              | ❌              | ✅         |
 | Editar orden               | ✅ propias      | ❌              | ✅         |
+
+La lectura de órdenes también queda restringida por propiedad: un solicitante solo ve sus órdenes y un técnico solo ve las órdenes asignadas.
 
 ### Respuestas de error de autenticación/autorización
 - `401` → No se envía JWT o es inválido/expirado.
